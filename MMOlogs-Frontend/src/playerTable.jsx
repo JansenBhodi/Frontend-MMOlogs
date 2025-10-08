@@ -14,12 +14,6 @@ const PlayerTable = () => {
   const navigate = useNavigate();
 
   
-  const columns = [
-    { field: 'name', headerName: 'Character Name', width: 130 },
-    { field: 'roleclass', headerName: 'Class', width: 100 },
-  ]
-
-  const paginationModel = { page: 0, pageSize: 5 };
   const roleclassMap = {
     0: 'Warrior',
     1: 'Knight',
@@ -29,11 +23,6 @@ const PlayerTable = () => {
     5: 'Scholar',
     6: 'Cleric'
 
-  }
-
-  const RedirectToPlayer = (params) => {
-    const playerName = params.row.name
-    navigate(`/players/${playerName}`)
   }
 
   useEffect(() => {
@@ -63,8 +52,26 @@ const PlayerTable = () => {
 
   }, [])
 
+  const paginationModel = { page: 0, pageSize: 5 };
+  
+  const columns = [
+    { field: 'name', headerName: 'Character Name', width: 130 },
+    { field: 'roleclass', headerName: 'Class', width: 130,
+      valueGetter: (value) =>
+      {
+        return roleclassMap[value]
+      }
+     },
+  ]
+  
+  const RedirectToPlayer = (params) => {
+    const playerName = params.row.name
+    navigate(`/players/${playerName}`)
+  }
+
   return (
     <Paper sx={{ height: 400, width: '100%' }}>
+      {console.log('Players:', players)}
       <DataGrid
         rows={players}
         columns={columns}
