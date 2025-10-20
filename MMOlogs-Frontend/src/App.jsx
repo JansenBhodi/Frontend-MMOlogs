@@ -7,6 +7,7 @@ function App() {
     <Routes>
       <Route path="/players" element={<PlayerTable />} />
       <Route path="/players/:name" element={<PlayerDetail />} />
+
     </Routes>
   );
 }
