@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react'
-import { DataGrid } from '@mui/x-data-grid'
-import Paper from '@mui/material/Paper'
-import App from './App.jsx'
-import axios from 'axios'
+import { useState, useEffect } from 'react';
+import { DataGrid } from '@mui/x-data-grid';
+import Paper from '@mui/material/Paper';
+import App from './App.jsx';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
 const PlayerTable = () => {
 
-  const [count, setCount] = useState(0) 
-  const [players, setPlayers] = useState([])
+  const [count, setCount] = useState(0) ;
+  const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -23,11 +23,11 @@ const PlayerTable = () => {
     5: 'Scholar',
     6: 'Cleric'
 
-  }
+  };
 
   useEffect(() => {
     const fetchData = () => {
-      setLoading(true)
+      setLoading(true);
       axios.get('https://localhost:7289/Player')
         .then(function (response) {
           setPlayers(response.data.data)
@@ -39,49 +39,54 @@ const PlayerTable = () => {
         .finally(function () {
           setLoading(false)
         })
-    }
+    };
 
 
   //Lets start with a filled table
-  fetchData()
+  fetchData();
 
   //Pull the data again every minute
-  const Interval = setInterval(fetchData, 60000)
+  const Interval = setInterval(fetchData, 60000);
   //prevent memory leakage
-  return () => clearInterval(Interval)
+  return () => clearInterval(Interval);
 
-  }, [])
+  }, []);
 
-  const paginationModel = { page: 0, pageSize: 5 };
+  const paginationModel = { page: 0, pageSize: 50 };
   
   const columns = [
-    { field: 'name', headerName: 'Character Name', width: 130 },
-    { field: 'roleclass', headerName: 'Class', width: 130,
+    { field: 'name', headerName: 'Character Name', width: 200 },
+    { field: 'roleclass', headerName: 'Class', width: 200,
       valueGetter: (value) =>
       {
-        return roleclassMap[value]
+        return roleclassMap[value];
       }
      },
-  ]
+  ];
   
   const RedirectToPlayer = (params) => {
-    const playerName = params.row.name
-    navigate(`/players/${playerName}`)
-  }
+    const playerName = params.row.name;
+    navigate(`/players/${playerName}`);
+  };
 
   return (
-    <Paper sx={{ height: 400, width: '100%' }}>
-      {console.log('Players:', players)}
-      <DataGrid
-        rows={players}
-        columns={columns}
-        initialState={{ pagination: { paginationModel } }}
-        pageSizeOptions={[5, 10]}
-        onRowClick={RedirectToPlayer}
-        sx={{ border: 0 }}
-      />
-    </Paper>
+    <div data-test="players-table" className="playerOverview">
+      <Paper sx={{ height: 400, width: '100%', backgroundColor: 'black' }}>
+        <DataGrid
+          rows={players}
+          columns={columns}
+          initialState={{ pagination: { paginationModel } }}
+          pageSizeOptions={[50, 100]}
+          onRowClick={RedirectToPlayer}
+          sx={{ border: 2,
+                boxShadow: 2,
+                backgroundColor: 'black',
+                borderColor: 'white'
+           }}
+        />
+      </Paper>
+    </div>
   )
-}
+};
 
-export default PlayerTable
+export default PlayerTable;
