@@ -27,14 +27,4 @@ jobs:
       - name: Build Docker Image
         run: docker build -t mmo-frontend:latest .
 
-      # Run SonarCloud analysis
-      - uses: SonarSource/sonarqube-scan-action@v6
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        with:
-          args: >
-            -Dsonar.projectKey=JansenBhodi_Frontend-MMOlogs
-            -Dsonar.organization=jansenbhodi
-            -Dsonar.sources=src
-            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+      # I would run Sonar CLoud here but that does automatic checks on pulls.
