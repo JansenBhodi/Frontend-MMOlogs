@@ -11,8 +11,28 @@ jobs:
   build:
     name: Build and analyze docker image
     runs-on: ubuntu-latest
-    
+
+    services:
+      sonarqube: 
+        image: sonarqube-latest
+        ports:
+          - 9000:9000
+        options: 
+          --health-cmd="curl -f http://localhost:9000/api/system/health || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+  
     steps:
+      - uses: actions/checkout@v4
+      - name: Wait for SonarQube
+        run: |
+          echo "Waiting for SonarQube to be healthy..."
+          for i in {1..30}; do
+            curl -s http://localhost:9000/api/system/health | grep "UP" && break
+            sleep 5
+          done
+          
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
