@@ -16,7 +16,7 @@ jobs:
       sonarqube: 
         image: sonarqube:latest
         ports:
-          - 9000:9000
+          - 9092:9000
         options: 
           --health-cmd="curl -f http://localhost:9000/api/system/health || exit 1"
           --health-interval=10s
