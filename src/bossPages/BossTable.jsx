@@ -4,32 +4,24 @@ import Paper from '@mui/material/Paper';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+    //Once I build login I can use this to prevent people from going to pages they don't belong!
+    //if (!isAuthenticated) {
+    //  navigate('/login', { replace: true });
+    //}
 
-const PlayerTable = () => {
+const BossTable = () => {
 
   const [count, setCount] = useState(0) ;
-  const [players, setPlayers] = useState([]);
+  const [bosses, setBosses] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
-  
-  const roleclassMap = {
-    0: 'Warrior',
-    1: 'Knight',
-    2: 'Fighter',
-    3: 'Archer',
-    4: 'Fire Mage',
-    5: 'Scholar',
-    6: 'Cleric'
-
-  };
 
   useEffect(() => {
     const fetchData = () => {
       setLoading(true);
-      axios.get('https://localhost:7289/Player')
+      axios.get('https://localhost:7289/Boss')
         .then(function (response) {
-          setPlayers(response.data.data)
+          setBosses(response.data.data)
           console.log(response.data.data)
         })
         .catch(function (error) {
@@ -54,29 +46,26 @@ const PlayerTable = () => {
   const paginationModel = { page: 0, pageSize: 50 };
   
   const columns = [
-    { field: 'name', headerName: 'Character Name', width: 200 },
-    { field: 'roleclass', headerName: 'Class', width: 200,
-      valueGetter: (value) =>
-      {
-        return roleclassMap[value];
-      }
-     },
+    { field: 'name', headerName: 'Name', width: 200 },
+    { field: 'level', headerName: 'Level', width: 200 },
+    { field: 'maxLife', headerName: 'Health', width: 200 },
   ];
   
-  const RedirectToPlayer = (params) => {
-    const playerName = params.row.name;
-    navigate(`/players/${playerName}`);
+  const RedirectToBoss = (params) => {
+    const bossName = params.row.name;
+    console.log(params.row.id)
+    navigate(`/bosses/detail`, { state: { id: params.row.id }});
   };
 
   return (
-    <div data-test="players-table" className="playerOverview">
+    <div data-test="bosses-table" className="bossOverview">
       <Paper sx={{ height: 400, width: '100%', backgroundColor: 'black' }}>
         <DataGrid
-          rows={players}
+          rows={bosses}
           columns={columns}
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[50, 100]}
-          onRowClick={RedirectToPlayer}
+          onRowClick={RedirectToBoss}
           sx={{ border: 2,
                 boxShadow: 2,
                 backgroundColor: 'black',
@@ -88,4 +77,4 @@ const PlayerTable = () => {
   )
 };
 
-export default PlayerTable;
+export default BossTable;
