@@ -9,44 +9,32 @@ on:
 
 jobs:
   build:
-    name: Build and analyze docker image
+    name: Build and analyze
     runs-on: ubuntu-latest
 
-    services:
-      sonarqube: 
-        image: sonarqube:latest
-        ports:
-          - 9092:9000
-        options: 
-          --health-cmd="curl -f http://localhost:9000/api/system/health || exit 1"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=30
-  
     steps:
       - uses: actions/checkout@v4
-      - name: Wait for SonarQube
-        run: |
-          echo "Waiting for SonarQube to be healthy..."
-          for i in {1..30}; do
-            curl -s http://localhost:9000/api/system/health | grep "UP" && break
-            sleep 5
-          done
-          
-      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - run: npm install
+
+      # Build Docker image
       - name: Build Docker Image
         run: docker build -t mmo-frontend:latest .
 
+      # Run SonarCloud analysis
       - uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      # If you wish to fail your job when the Quality Gate is red, uncomment the
-      # following lines. This would typically be used to fail a deployment.
-      # - uses: SonarSource/sonarqube-quality-gate-action@v1
-      #   timeout-minutes: 5
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=Frontend-MMOlogs
+            -Dsonar.organization=jansenbhodi
+            -Dsonar.sources=src
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
