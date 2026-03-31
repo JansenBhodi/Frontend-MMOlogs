@@ -4,11 +4,13 @@
   color: #fbfbfb;
 }
 
+
 .navbar {
   padding: 20px;
   max-width: 800px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin: 0 auto;
   border-bottom: 1px solid darkblue;
 }
@@ -33,7 +35,7 @@
 }
 
 .MuiDataGrid-columnHeaders {
-background-color: #1c1c1c;
+background-color: #743aca;
 color: 'yellow';
 }
 
@@ -44,7 +46,7 @@ color: 'yellow';
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #1c1c1c;
+  background-color: #28077c;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -55,7 +57,7 @@ color: 'yellow';
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #1c1c1c;
+    background-color: #5a3ac4;
   }
   a:hover {
     color: #747bff;
@@ -63,4 +65,34 @@ color: 'yellow';
   button {
     background-color: #f9f9f9;
   }
+}
+
+.boss-detail-container {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.boss-left {
+    flex: 1;
+}
+
+.boss-right {
+    flex: 1;
+    border-left: 2px solid #444;
+    padding-left: 2rem;
+}
+
+.mechanic-item {
+    margin-bottom: 1rem;
+}
+
+.mechanic-name {
+    font-weight: bold;
+}
+
+.links {
+    display: flex;
+    gap: 1rem; /* space between dropdowns */
+    align-items: center;
 }

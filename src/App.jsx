@@ -3,7 +3,8 @@ import PlayerDetail from './playerDetail.jsx'
 import PlayerTable from './playerTable.jsx'
 import PlayerCreate from './playerCreate.jsx'
 import BossTable from './bossPages/BossTable.jsx'
-//import BossCreate from './bossPages/bossCreate.jsx'
+import BossCreate from './bossPages/bossCreate.jsx'
+import MechanicCreate from './mechanicPages/mechanicCreate.jsx'
 import BossDetail from './bossPages/bossDetail.jsx'
 import MyNavbar from './navbar.jsx'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -28,8 +29,9 @@ function App() {
               <Route path="/players/:name" element={<PlayerDetail />} />
               <Route path="/players/registry" element={<PlayerCreate />} />
               <Route path="/bosses" element={<BossTable />} />
-              {/*<Route path="/bosses/create" element={<BossCreate />} />*/}
+              <Route path="/bosses/create" element={<BossCreate />} />
               <Route path="/bosses/detail" element={<BossDetail />} />
+              <Route path="/bosses/mechanics/create" element={<MechanicCreate />} />
             </Routes>
           </div>
         </div>
