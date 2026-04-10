@@ -12,6 +12,9 @@ const MyNavbar = () => {
                 </Navbar.Brand>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="nav-header">
+                        <Navbar.Text as={Link} to="/players/newlog">
+                            Upload Log
+                        </Navbar.Text>
 
                         <NavDropdown title="Bosses" id="bosses-nav-dropdown">
                             <NavDropdown.Item as={Link} to="/bosses">
