@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import api from '../assets/axios'
 
 const MechanicCreate = ( {bossId} ) => {
     const [name, setName] = useState('');
@@ -10,16 +11,11 @@ const MechanicCreate = ( {bossId} ) => {
     const postMechanic = async (e) => {
             e.preventDefault();
             const mechanic = {name, description, bossId};
-            console.log(JSON.stringify(mechanic));
-            const options = {
-            method:'POST',
-            url: 'https://localhost:7289/Mechanics',
-            headers: {'Content-Type': 'application/json'},
-            data: JSON.stringify(mechanic)
-           };
 
            try {
-            const { data, status } = await axios.request(options);
+            const { data, status } = await api.post('/Mechanics', mechanic, {
+            headers: { 'Content-Type': 'application/json' }
+            });
             console.log(data);
 
             if (status === 201) 

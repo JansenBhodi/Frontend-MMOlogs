@@ -3,6 +3,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import api from '../assets/axios'
 
     //Once I build login I can use this to prevent people from going to pages they don't belong!
     //if (!isAuthenticated) {
@@ -19,7 +20,7 @@ const BossTable = () => {
   useEffect(() => {
     const fetchData = () => {
       setLoading(true);
-      axios.get('https://localhost:7289/Boss')
+      api.get('/Boss')
         .then(function (response) {
           setBosses(response.data.data)
           console.log(response.data.data)

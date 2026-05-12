@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import api from '../src/assets/axios'
 
 const PlayerCreate = () => {
     const [name, setName] = useState('');
@@ -20,16 +21,11 @@ const PlayerCreate = () => {
     const postPlayer = async (e) => {
             e.preventDefault();
             const player = {name, roleclass};
-            console.log(JSON.stringify(player));
-            const options = {
-            method:'POST',
-            url: 'https://localhost:7289/Player',
-            headers: {'Content-Type': 'application/json'},
-            data: JSON.stringify(player)
-           };
 
            try {
-            const { data, status } = await axios.request(options);
+            const { data, status } = await api.post('/Player', player, {
+            headers: { 'Content-Type': 'application/json' }
+            });
             console.log(data);
 
             if (status === 201) 

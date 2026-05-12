@@ -3,6 +3,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import CustomModal from '../components/customModal';
 import axios from 'axios';
 import MechanicCreate from '../mechanicPages/mechanicCreate';
+import api from '../assets/axios'
 
 
 const BossDetail = () => {
@@ -16,11 +17,10 @@ const BossDetail = () => {
     useEffect(() => {
         const fetchBoss = async () => {
         setLoading(true)
-        const options = {method: 'GET', url: `https://localhost:7289/Boss/${input.id}`};
 
 
         try {
-            const { data } = await axios.request(options);
+            const { data } = await api.get(`/Boss/${input.id}`);
             console.log(data);
             setBoss(data.data);
         } catch (error) {

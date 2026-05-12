@@ -3,6 +3,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import api from '../src/assets/axios'
 
 
 const PlayerTable = () => {
@@ -27,7 +28,7 @@ const PlayerTable = () => {
   useEffect(() => {
     const fetchData = () => {
       setLoading(true);
-      axios.get('https://localhost:7289/Player')
+      api.get('/Player')
         .then(function (response) {
           setPlayers(response.data.data)
           console.log(response.data.data)
