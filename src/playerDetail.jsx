@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import api from '../src/assets/axios'
 
 
 const PlayerDetail = () => {
@@ -22,11 +23,8 @@ const PlayerDetail = () => {
     const fetchPlayer = async () => {
       setLoading(true)
 
-      const options = {method: 'GET', url: `https://localhost:7289/Player/${encodeURIComponent(params.name)}`};
-
-
       try {
-        const { data } = await axios.request(options);
+        const { data } = await api.get(`/Player/${encodeURIComponent(params.name)}`);
         console.log(data);
         setPlayer(data.data);
       } catch (error) {
